@@ -42,7 +42,8 @@ module GRATR
     #   * edge_class() # Returns the class used to store edges
     def self.included(klass)
        [:directed?,:add_vertex!,:add_edge!,:remove_vertex!,:remove_edge!,:vertices,:edges,:edge_class].each do |meth| 
-         raise "Must implement #{meth}" unless klass.instance_methods.include?(meth.to_s)
+         raise "#{klass} must implement #{meth}" unless
+           klass.method_defined? meth
        end
        
        klass.class_eval do

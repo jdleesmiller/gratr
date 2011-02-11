@@ -81,9 +81,9 @@ module GRATR
     def cost(u,v=nil,weight=nil)
       u.kind_of?(Arc) ? weight = v : u = edge_class[u,v] 
       case weight
-        when Proc : weight.call(u)
-        when nil  : self[u]
-        else        self[u][weight]
+        when Proc then weight.call(u)
+        when nil  then self[u]
+        else           self[u][weight]
       end
     end
     
@@ -93,9 +93,9 @@ module GRATR
     # A function to set properties specified by the user.
     def property_set(u,name,value)
       case name
-        when Proc : name.call(value)
-        when nil  : self[u] = value
-        else        self[u][name] = value
+        when Proc then name.call(value)
+        when nil  then self[u] = value
+        else           self[u][name] = value
       end
     end
 

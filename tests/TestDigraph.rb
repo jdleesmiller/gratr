@@ -207,7 +207,7 @@ class TestDigraph < Test::Unit::TestCase # :nodoc:
     assert complement.edge?(4,1)
     assert complement.edge?(4,2)
     assert complement.edge?(4,3)
-    assert 9, complement.num_edges
+    assert_equal 9, complement.num_edges
 
     complement = @loops.complement 
     assert_equal [1,2,3,4], complement.vertices.sort
@@ -223,14 +223,14 @@ class TestDigraph < Test::Unit::TestCase # :nodoc:
     assert complement.edge?(4,1)
     assert complement.edge?(4,2)
     assert complement.edge?(4,3)
-    assert 12, complement.num_edges
+    assert_equal 12, complement.num_edges
   end
 
   def test_induced_subgraph
     induced = @single.induced_subgraph([1,2])
-    assert [1,2], induced.vertices.sort
+    assert_equal [1,2], induced.vertices.sort
     assert induced.edge?(1,2)
-    assert 1, induced.num_edges
+    assert_equal 1, induced.num_edges
   end
 
   def test_include

@@ -107,10 +107,22 @@ class TestSearch < Test::Unit::TestCase # :nodoc:
       assign_bfsnumber_ancestry(@directed, bfs, level, father, vertex)  
       # Property (B1)
       father.keys.each {|v| assert(bfs[father[v]] < bfs[v])}
+
       # Property (B2)
-      @directed.edges.each {|e| assert((level[e.source]-level[e.target]).abs<2)}
+      # JLM: the property in question is that the levels of every pair of
+      # nodes IN THE SAME DFS TREE differ by at most one. This test doesn't
+      # quite check that. It happened to work in 1.8, because the order in which
+      # the trees in the forest were computed happened to produce levels that
+      # satisfied this property (in particular, we get root 5 then root 6 in
+      # 1.8, but in 1.9 we get root 5 then root 1). Could write a better test.
+      #@directed.edges.each {|e|
+      #  assert((level[e.source]-level[e.target]).abs<2)}
+      
       # Property (B3)
       # FIXME: How can one test this?
+      # JLM: the property in question is "If v is a vertex in the connected
+      # component of G whose root in T is r, then the level of v equals the
+      # length of the shortest path from r to v in G." for the record.
       #@directed.vertex.each {|v| assert((level[e.source]-level[e.target]).abs<2)}
     end
     assert_equal 6, @directed.dfs.size
