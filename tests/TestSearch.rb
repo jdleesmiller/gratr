@@ -71,9 +71,14 @@ class TestSearch < Test::Unit::TestCase # :nodoc:
     father = {}
     @directed.each do |vertex|
       assign_dfsnumber_ancestry(@directed, dfs, father, vertex)  
-      # Property (D1)
+      # Property (D1): If v is a proper ancestor of w in T, then DFSNUMBER(v) <
+      # DFSNUMBER(w).
       father.keys.each {|v| assert(dfs[father[v]] < dfs[v])}
-      # Property (D2)
+
+      # Property (D2): For every edge of G, whether tree or back edge, one of
+      # its endpoints is an ancestor of the other endpoint; that is, there are
+      # no cross edges. (A back edge is any edge that is not contained within
+      # one tree.)
       # FIXME: Huh? Doesn't work
       #@directed.edges.each {|e| assert(related?(father, e.source, e.target))}
       #@directed.edges.each {|e| assert(dfs[e.source] < dfs[e.target])}
@@ -105,12 +110,14 @@ class TestSearch < Test::Unit::TestCase # :nodoc:
     bfs    = {}
     @directed.each do |vertex|
       assign_bfsnumber_ancestry(@directed, bfs, level, father, vertex)  
-      # Property (B1)
+      # Property (B1): If v is a proper ancestor of w in T, then BFSNUMBER(v) <
+      # BFSNUMBER(w).
       father.keys.each {|v| assert(bfs[father[v]] < bfs[v])}
 
-      # Property (B2)
+      # Property (B2): Every edge of G, whether tree or back edge, connects two
+      # vertices whose level in T differs by at most 1.
       # JLM: the property in question is that the levels of every pair of
-      # nodes IN THE SAME DFS TREE differ by at most one. This test doesn't
+      # nodes IN THE SAME BFS TREE (T) differ by at most one. This test doesn't
       # quite check that. It happened to work in 1.8, because the order in which
       # the trees in the forest were computed happened to produce levels that
       # satisfied this property (in particular, we get root 5 then root 6 in
@@ -118,11 +125,10 @@ class TestSearch < Test::Unit::TestCase # :nodoc:
       #@directed.edges.each {|e|
       #  assert((level[e.source]-level[e.target]).abs<2)}
       
-      # Property (B3)
+      # Property (B3): If v is a vertex in the connected component of G whose
+      # root in T is r, then the level of v equals the length of the shortest
+      # path from r to v in G.
       # FIXME: How can one test this?
-      # JLM: the property in question is "If v is a vertex in the connected
-      # component of G whose root in T is r, then the level of v equals the
-      # length of the shortest path from r to v in G." for the record.
       #@directed.vertex.each {|v| assert((level[e.source]-level[e.target]).abs<2)}
     end
     assert_equal 6, @directed.dfs.size
