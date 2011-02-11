@@ -100,7 +100,7 @@ module GRATR
     def initialize(*params)
       args = (params.pop if params.last.kind_of? Hash) || {}
       args[:algorithmic_category] = DigraphAlgorithms    
-      super *(params << args)
+      super(*(params << args))
     end
   end
   
@@ -113,7 +113,7 @@ module GRATR
     def initialize(*params)
       args = (params.pop if params.last.kind_of? Hash) || {}
       args[:parallel_edges] = true
-      super *(params << args)
+      super(*(params << args))
     end 
   end
 
@@ -122,7 +122,7 @@ module GRATR
     def initialize(*params)
       args = (params.pop if params.last.kind_of? Hash) || {}
       args[:loops] = true
-      super *(params << args)
+      super(*(params << args))
     end 
   end
 
