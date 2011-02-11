@@ -31,9 +31,7 @@ require 'gratr/edge'
 require 'gratr/labels'
 require 'gratr/graph_api'
 
-module GRATR
-  GRATR_VERSION = "0.5.1"
-  
+module GRATR 
   # Using the functions required by the GraphAPI, it implements all the
   # basic functions of a Graph class by using only functions in GraphAPI.
   # An actual implementation still needs to be done, as in Digraph or

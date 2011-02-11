@@ -26,6 +26,7 @@
 #++
 
 
+require 'gratr/version'
 require 'gratr/edge'
 require 'gratr/graph'
 

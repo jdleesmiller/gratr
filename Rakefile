@@ -10,15 +10,10 @@ require 'rake/clean'
 require 'rake/testtask'
 require 'rake/rdoctask'
 
+$LOAD_PATH << 'lib'
+SPEC = eval(File.read(File.join(File.dirname(__FILE__), 'gratr.gemspec')))
+
 # Determine the current version of the software
-
-if `ruby -Ilib -rgratr/base -e'puts GRATR_VERSION'` =~ /\S+$/
-  PKG_VERSION = $&
-else
-  PKG_VERSION = "0.0.0"
-end
-
-SUMMARY = "Graph Theory Ruby library"
 SOURCES = FileList['lib/**/*.rb']
 RDOC_DIR = './gratr'
 
@@ -52,7 +47,7 @@ end
 
 desc "Tag all the CVS files with the latest release number (TAG=x)"
 task :tag do
-  rel = "REL_" + PKG_VERSION.gsub(/\./, '_')
+  rel = "REL_" + GRATR::VERSION.gsub(/\./, '_')
   rel << ENV['TAG'] if ENV['TAG']
   puts rel
   sh %{cvs commit -m 'pre-tag commit'}
@@ -63,7 +58,7 @@ end
 
 rd = Rake::RDocTask.new("rdoc") { |rdoc|
   rdoc.rdoc_dir = RDOC_DIR
-  rdoc.title    = SUMMARY
+  rdoc.title    = SPEC.summary
   rdoc.options << '--line-numbers' << '--inline-source' <<
      '--main' << 'README'
   rdoc.rdoc_files.include(SOURCES, 'README' ) #, 'examples/examples.rb')
@@ -73,78 +68,10 @@ rd = Rake::RDocTask.new("rdoc") { |rdoc|
 # Create a task that will package the gratr software into distributable
 # tar, zip and gem files.
 
-PKG_FILES = FileList[
-  'install.rb',
-  '[A-Z]*',
-  'tests/**/*.rb',
-  'examples/**/*'
-] + SOURCES
-
 if ! defined?(Gem)
   puts "Package Target requires RubyGEMs"
 else
-  spec = Gem::Specification.new do |s|
-    
-    #### Basic information.
-
-    s.name = 'gratr'
-    s.version = PKG_VERSION
-    s.summary = SUMMARY
-
-    s.description = <<-EOF
-    GRATR is a framework for graph data structures and algorithms.
-
-    This library is a fork of RGL. This version utilizes
-    Ruby blocks and duck typing to greatly simplfy the code. It also supports
-    export to DOT format for display as graphics.
-
-    GRATR currently contains a core set of algorithm patterns:
-
-     * Breadth First Search 
-     * Depth First Search 
-     * A* Search
-     * Floyd-Warshall
-     * Best First Search
-     * Djikstra's Algorithm
-     * Lexicographic Search
-
-    The algorithm patterns by themselves do not compute any meaningful quantities
-    over graphs, they are merely building blocks for constructing graph
-    algorithms. The graph algorithms in GRATR currently include:
-
-     * Topological Sort 
-     * Strongly Connected Components 
-     * Transitive Closure
-     * Rural Chinese Postman
-     * Biconnected
-    EOF
-
-    #### Which files are to be included in this gem?  Everything!  (Except CVS directories.)
-    s.files = PKG_FILES.to_a
-
-    #### Load-time details: library and application (you will need one or both).
-
-    s.require_path = 'lib'                         # Use these for libraries.
-    s.autorequire = 'gratr'
-
-    #### Documentation and testing.
-
-    s.has_rdoc = true
-    s.extra_rdoc_files = ['README']
-    s.rdoc_options <<
-      '--title' <<  'GRATR - Ruby Graph Library' <<
-      '--main' << 'README' <<
-      '--line-numbers'
-
-    #### Author and project details.
-    s.author = "Shawn Garbett"
-    s.email = "shawn@garbett.org"
-    s.homepage = "http://gratr.rubyforge.org"
-    s.rubyforge_project = "gratr"
-    
-  end
-
-  Rake::GemPackageTask.new(spec) do |pkg|
+  Rake::GemPackageTask.new(SPEC) do |pkg|
     #pkg.need_zip = true
     pkg.need_tar = true
   end
