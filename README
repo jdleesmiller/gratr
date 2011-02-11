@@ -1,5 +1,12 @@
 = GRAph Theory in Ruby (GRATR)
 
+NOTES ON THIS FORK (https://github.com/jdleesmiller/gratr):
+- This isn't an official fork.
+- I just needed to fix a few things to make it work with 1.9.
+- It also now works with bundler (gemspec in a separate file).
+- All of the test cases that are important to me now pass. HOWEVER, there are
+  still some that fail (in particular in the chromatic number calcs).
+
 link:../gratr.jpg GRATR is a framework for graph data structures and algorithms.
 
 This project is a fork of Horst Duchene's RGL library. 
