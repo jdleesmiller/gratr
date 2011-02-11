@@ -10,7 +10,6 @@ require 'rake/clean'
 require 'rake/testtask'
 require 'rake/rdoctask'
 
-$LOAD_PATH << 'lib'
 SPEC = eval(File.read(File.join(File.dirname(__FILE__), 'gratr.gemspec')))
 
 # Determine the current version of the software

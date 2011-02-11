@@ -1,3 +1,7 @@
+# -*- encoding: utf-8 -*-
+lib = File.expand_path('../lib/', __FILE__)
+$:.unshift lib unless $:.include?(lib)
+ 
 require 'gratr/version'
 
 Gem::Specification.new do |s|
@@ -36,16 +40,15 @@ EOF
 
   #### Which files are to be included in this gem?  Everything!
   #(Except CVS directories.)
-  s.files = FileList[
+  s.files = Dir[
   'install.rb',
-  '[A-Z]*',
+  'README',
   'lib/**/*.rb',
   'tests/**/*.rb',
   'examples/**/*'].to_a
 
   #### Load-time details: library and application (you will need one or both).
   s.require_path = 'lib'                         # Use these for libraries.
-  s.autorequire = 'gratr'
 
   #### Documentation and testing.
   s.has_rdoc = true
