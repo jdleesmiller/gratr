@@ -6,6 +6,10 @@ NOTES ON THIS FORK (https://github.com/jdleesmiller/gratr):
 - It also now works with bundler (gemspec in a separate file).
 - All of the test cases that are important to me now pass. HOWEVER, there are
   still some that fail (in particular in the chromatic number calcs).
+- See also this fork:
+  https://github.com/bruce/graphy
+  which seems to have been developed a bit more after GRATR development stopped.
+END OF NOTES
 
 link:../gratr.jpg GRATR is a framework for graph data structures and algorithms.
 
