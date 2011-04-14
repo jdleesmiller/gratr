@@ -51,7 +51,6 @@ EOF
   s.require_path = 'lib'                         # Use these for libraries.
 
   #### Documentation and testing.
-  s.has_rdoc = true
   s.extra_rdoc_files = ['README']
   s.rdoc_options <<
   '--title' <<  'GRATR - Ruby Graph Library' <<
